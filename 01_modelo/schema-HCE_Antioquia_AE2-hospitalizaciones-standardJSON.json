@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "_id",
+    "admision",
+    "alta",
+    "diagnosticos",
+    "evoluciones",
+    "id_hospitalizacion",
+    "notas_enfermeria",
+    "ordenes_medicamentos",
+    "paciente",
+    "signos_vitales"
+  ],
+  "properties": {
+    "_id": {
+      "$ref": "#/$defs/ObjectId"
+    },
+    "admision": {
+      "type": "object",
+      "required": [
+        "estado",
+        "fecha_ingreso",
+        "habitacion",
+        "servicio"
+      ],
+      "properties": {
+        "estado": {
+          "type": "string"
+        },
+        "fecha_ingreso": {
+          "$ref": "#/$defs/Date"
+        },
+        "habitacion": {
+          "type": "string"
+        },
+        "servicio": {
+          "type": "string"
+        }
+      }
+    },
+    "alta": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "fecha",
+            "responsable",
+            "resumen"
+          ],
+          "properties": {
+            "fecha": {
+              "$ref": "#/$defs/Date"
+            },
+            "responsable": {
+              "type": "string"
+            },
+            "resumen": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "diagnosticos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "descripcion",
+          "fecha",
+          "principal"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "fecha": {
+            "$ref": "#/$defs/Date"
+          },
+          "principal": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "evoluciones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "fecha",
+          "nota",
+          "profesional"
+        ],
+        "properties": {
+          "fecha": {
+            "$ref": "#/$defs/Date"
+          },
+          "nota": {
+            "type": "string"
+          },
+          "profesional": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "id_hospitalizacion": {
+      "type": "string"
+    },
+    "notas_enfermeria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "fecha",
+          "nota",
+          "turno"
+        ],
+        "properties": {
+          "fecha": {
+            "$ref": "#/$defs/Date"
+          },
+          "nota": {
+            "type": "string"
+          },
+          "turno": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ordenes_medicamentos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "dosis",
+          "estado",
+          "frecuencia",
+          "medicamento",
+          "via"
+        ],
+        "properties": {
+          "dosis": {
+            "type": "string"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "frecuencia": {
+            "type": "string"
+          },
+          "medicamento": {
+            "type": "string"
+          },
+          "via": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "paciente": {
+      "type": "object",
+      "required": [
+        "documento_prueba",
+        "edad",
+        "id_paciente",
+        "nombre",
+        "sexo",
+        "tipo_documento"
+      ],
+      "properties": {
+        "documento_prueba": {
+          "type": "string"
+        },
+        "edad": {
+          "type": "integer"
+        },
+        "id_paciente": {
+          "type": "string"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "sexo": {
+          "type": "string"
+        },
+        "tipo_documento": {
+          "type": "string"
+        }
+      }
+    },
+    "signos_vitales": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "fecha",
+          "frecuencia_cardiaca",
+          "frecuencia_respiratoria",
+          "presion_arterial",
+          "saturacion_o2",
+          "temperatura_c"
+        ],
+        "properties": {
+          "fecha": {
+            "$ref": "#/$defs/Date"
+          },
+          "frecuencia_cardiaca": {
+            "type": "integer"
+          },
+          "frecuencia_respiratoria": {
+            "type": "integer"
+          },
+          "presion_arterial": {
+            "type": "string"
+          },
+          "saturacion_o2": {
+            "type": "integer"
+          },
+          "temperatura_c": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Double"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ObjectId": {
+      "type": "object",
+      "properties": {
+        "$oid": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{24}$"
+        }
+      },
+      "required": [
+        "$oid"
+      ],
+      "additionalProperties": false
+    },
+    "Double": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$numberDouble": {
+              "enum": [
+                "Infinity",
+                "-Infinity",
+                "NaN"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Date": {
+      "type": "object",
+      "properties": {
+        "$date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "$date"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
